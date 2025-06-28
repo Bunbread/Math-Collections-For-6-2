@@ -15,32 +15,37 @@ def get_denominators(*args):
     denoms = [f.denominator for f in fracs]
     return denoms
 
+def convert_fractostr(f):
+    return f"{f.numerator}/{f.denominator}"
+
+
 def sort_fractions_steps_lth(*f):
     steps = []
     fractions = [Fraction(str(x)) for x in f]
     steps.append(f"{', '.join(f)} จงเรียงเศษส่วนจากน้อยไปมาก")
     
-    # Get denominators and LCM
     denoms = [frac.denominator for frac in fractions]
     lcm = math.lcm(*denoms)
     steps.append(f"วิธีทำ ค.ร.น. ของ {', '.join(str(d) for d in denoms)} คือ {lcm}")
     
     converted = []
-    # Show conversion step for each fraction
     for frac in fractions:
         multiplier = lcm // frac.denominator
         new_num = frac.numerator * multiplier
-        steps.append(f"     {frac} = {frac.numerator} x {multiplier}/{frac.denominator} x {multiplier} = {new_num}/{lcm}")
-        converted.append((frac, Fraction(new_num, lcm)))
-    
+        steps.append(f"     {convert_fractostr(frac)} = {frac.numerator} x {multiplier}/{frac.denominator} x {multiplier} = {new_num}/{lcm}")
+        converted.append((frac, Fraction(new_num, lcm)))  # (original, converted)
+
     # Sort by converted value
     converted.sort(key=lambda x: x[1])
-    
-    # Show sorted fractions by original form
-    sorted_str = ", ".join(str(orig) for orig, _ in converted)
-    steps.append(f"จะได้ (ไปหาเอาเอง)")
-    steps.append(f"ตอบ {sorted_str}")
-    
+
+    # Show sorted list in same-denominator form
+    sorted_converted_strs = [convert_fractostr(c[1]) for c in converted]
+    steps.append(f"จะได้ {', '.join(sorted_converted_strs)}")
+
+    # Then show sorted original fractions
+    sorted_original_strs = [convert_fractostr(c[0]) for c in converted]
+    steps.append(f"ตอบ {', '.join(sorted_original_strs)}")
+
     return steps
 
 def sort_fractions_steps_htl(*f):
