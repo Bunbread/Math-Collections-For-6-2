@@ -160,15 +160,3 @@ class NF:
         whole = total // self.denominator
         remainder = total % self.denominator
         return NF(self.whole + whole, remainder, self.denominator)
-
-
-
-a = NF(1, 1, 2)     # 1 1/2
-b = NF(2, 2, 3)     # 2 2/3
-c = a + b           # should be 4 1/6
-d = a - b           # should be -1 1/6
-
-print("a:", a)
-print("b:", b)
-print("a + b =", c)
-print("a - b =", d)

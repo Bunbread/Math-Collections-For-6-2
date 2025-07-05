@@ -2,7 +2,7 @@ import math
 from Fraction_class import *
 
 def get_target(n, target):
-    return target / n
+    return target // n
         
 def add_sub_steps(f1, f2, operator, n):
     steps = []
