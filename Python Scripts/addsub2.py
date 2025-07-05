@@ -2,13 +2,7 @@ import math
 from Fraction_class import *
 
 def get_target(n, target):
-    multiplier = 1
-    while True:
-        if n * multiplier == target:
-            break
-        else:
-            multiplier += 1
-    return multiplier
+    return target / n
         
 def add_sub_steps(f1, f2, operator, n):
     steps = []

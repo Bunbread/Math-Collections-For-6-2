@@ -1,14 +1,9 @@
-from math import gcd
+from math import gcd, lcm
+import math
 
 def get_target(n, target):
-    multiplier = 1
-    while True:
-        if n * multiplier == target:
-            break
-        else:
-            multiplier += 1
-    return multiplier
-
+    return target / n
+    
 class F:
     def __init__(self, whole, numerator, denominator):
         if denominator == 0:
@@ -110,5 +105,70 @@ class F:
         whole = num // den
         remainder = num % den
         return F(whole, remainder, den)
+
     def can_simplify(self):
         return gcd(self.numerator, self.denominator) > 1
+
+class NF:
+    def __init__(self, whole, numerator, denominator):
+        if denominator == 0:
+            raise ZeroDivisionError("Idiot")
+        self.whole = whole
+        self.numerator = numerator
+        self.denominator = denominator
+    def __str__(self):
+        if self.numerator == 0:
+            return str(self.whole)
+        elif self.denominator == 1:
+            return str(self.whole + self.numerator)
+        elif self.whole != 0:
+            return f"{self.whole} {self.numerator}/{self.denominator}"
+        else:
+            return f"{self.numerator}/{self.denominator}"
+    def to_improper(self):
+        return NF(0, self.whole * self.denominator + self.numerator, self.denominator)
+    def __add__(self, other):
+        lcms = lcm(self.denominator, other.denominator)
+
+        self_mul = lcms // self.denominator
+        other_mul = lcms // other.denominator
+
+        t1 = NF(self.whole, self.numerator * self_mul, self.denominator * self_mul).to_improper()
+        t2 = NF(other.whole, other.numerator * other_mul, other.denominator * other_mul).to_improper()
+
+        return NF(0, t1.numerator + t2.numerator, t1.denominator)
+    def __sub__(self, other):
+        lcms = lcm(self.denominator, other.denominator)
+
+        self_mul = lcms // self.denominator
+        other_mul = lcms // other.denominator
+
+        t1 = NF(self.whole, self.numerator * self_mul, self.denominator * self_mul).to_improper()
+        t2 = NF(other.whole, other.numerator * other_mul, other.denominator * other_mul).to_improper()
+
+        return NF(0, t1.numerator - t2.numerator, t1.denominator)
+    def simplify(self):
+        common = gcd(self.numerator, self.denominator)
+        n1 = self.numerator // common
+        n2 = self.denominator // common
+        return NF(self.whole, n1, n2)
+    def to_mixed(self):
+        if self.numerator < self.denominator:
+            return self 
+
+        total = self.numerator
+        whole = total // self.denominator
+        remainder = total % self.denominator
+        return NF(self.whole + whole, remainder, self.denominator)
+
+
+
+a = NF(1, 1, 2)     # 1 1/2
+b = NF(2, 2, 3)     # 2 2/3
+c = a + b           # should be 4 1/6
+d = a - b           # should be -1 1/6
+
+print("a:", a)
+print("b:", b)
+print("a + b =", c)
+print("a - b =", d)
