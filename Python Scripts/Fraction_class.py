@@ -159,4 +159,4 @@ class NF:
         total = self.numerator
         whole = total // self.denominator
         remainder = total % self.denominator
-        return NF(self.whole + whole, remainder, self.denominator)
+        return NF(self.whole + whole, remainder, self.denominator) # hi
