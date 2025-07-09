@@ -179,3 +179,6 @@ class NF:
         whole = total // self.denominator
         remainder = total % self.denominator
         return NF(self.whole + whole, remainder, self.denominator) # hi
+    def to_num(self):
+        improped_fraction = self.to_improper()
+        return improped_fraction.numerator / improped_fraction.denominator
