@@ -180,5 +180,8 @@ class NF:
         remainder = total % self.denominator
         return NF(self.whole + whole, remainder, self.denominator) # hi
     def to_num(self):
+        if improped_fraction.denominator == 0:
+            raise ZeroDivisionError("Denominator cannot be zero.")
+            
         improped_fraction = self.to_improper()
         return improped_fraction.numerator / improped_fraction.denominator
