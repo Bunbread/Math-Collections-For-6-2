@@ -147,6 +147,25 @@ class NF:
         t2 = NF(other.whole, other.numerator * other_mul, other.denominator * other_mul).to_improper()
 
         return NF(0, t1.numerator - t2.numerator, t1.denominator)
+    def __mul__(self, other):
+        t1 = self.to_improper()
+        t2 = other.to_improper()
+        new_num = t1.numerator * t2.numerator
+        new_den = t1.denominator * t2.denominator
+        return NF(0, new_num, new_den)
+    def __truediv__(self, other):
+        t1 = self.to_improper()
+        t2 = other.to_improper()
+
+        # Division = multiply by reciprocal
+        new_num = t1.numerator * t2.denominator
+        new_den = t1.denominator * t2.numerator
+
+        # Avoid dividing by zero
+        if new_den == 0:
+            raise ZeroDivisionError("You're trying to divide by zero, don't do that.")
+
+        return NF(0, new_num, new_den)
     def simplify(self):
         common = gcd(self.numerator, self.denominator)
         n1 = self.numerator // common
