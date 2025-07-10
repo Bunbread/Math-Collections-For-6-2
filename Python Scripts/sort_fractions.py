@@ -52,7 +52,7 @@ def sort_fractions_steps_htl(*f):
     steps = []
     fractions = [Fraction(str(x)) for x in f]
     steps.append(f"{', '.join(f)} จงเรียงเศษส่วนจากน้อยไปมาก")
-    
+
     # Get denominators and LCM
     denoms = [frac.denominator for frac in fractions]
     lcm = math.lcm(*denoms)
