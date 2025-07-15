@@ -125,6 +125,8 @@ class NF:
             return f"{self.whole} {self.numerator}/{self.denominator}"
         else:
             return f"{self.numerator}/{self.denominator}"
+    def __repr__(self):
+        return f"Whole: {self.whole} Numerator: {self.numerator} Denominator: {self.denominator}"
     def to_improper(self):
         return NF(0, self.whole * self.denominator + self.numerator, self.denominator)
     def __add__(self, other):
