@@ -120,7 +120,7 @@ class NF:
         if self.numerator == 0:
             return str(self.whole)
         elif self.denominator == 1:
-            return str(self.whole + self.numerator)
+            return f"{self.numerator}/{self.denominator}"
         elif self.whole != 0:
             return f"{self.whole} {self.numerator}/{self.denominator}"
         else:
